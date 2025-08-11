@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -50,7 +49,6 @@ function App() {
 }
 
 export default App;
-=======
 import React from "react";
 import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from './contexts/AuthContext';
@@ -78,4 +76,3 @@ function App() {
 }
 
 export default App;
->>>>>>> 32e93ab88cb1b439d4fa03f31f06ea806de8aa94
