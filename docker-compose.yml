@@ -2,30 +2,39 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:16
+    image: postgres:14-alpine
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Tirth@2005
-      POSTGRES_DB: Odoo
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: newodoo
     ports:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+      - ./Backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d newodoo"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
 
   backend:
-    build: .
+    build: 
+      context: ./Backend
     restart: always
     environment:
       PGUSER: postgres
-      PGPASSWORD: Tirth@2005
-      PGDATABASE: Odoo
+      PGPASSWORD: admin
+      PGDATABASE: newodoo
       PGHOST: db
       PGPORT: 5432
     ports:
       - "3001:3001"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
 volumes:
   db_data:
