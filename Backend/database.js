@@ -1,14 +1,18 @@
-import pkg from "pg";
-const { Client } = pkg;
+import { Client } from 'pg';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const client = new Client({
-  host: process.env.PGHOST || "localhost",
-  port: process.env.PGPORT || 5432,
-  user: process.env.PGUSER || "youruser",
-  password: process.env.PGPASSWORD || "yourpassword",
-  database: process.env.PGDATABASE || "yourdb",
+  host: process.env.PGHOST,
+  port: process.env.PGPORT,
+  user: process.env.PGUSER,
+  password: process.env.PGPASSWORD,
+  database: process.env.PGDATABASE,
 });
 
-client.connect();
+client.connect()
+  .then(() => console.log('Connected to PostgreSQL database'))
+  .catch(err => console.error('Database connection error:', err));
 
 export default client;

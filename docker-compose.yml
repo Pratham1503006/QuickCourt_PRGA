@@ -14,7 +14,7 @@ services:
       - db_data:/var/lib/postgresql/data
 
   backend:
-    build: .
+    build: ./Backend
     restart: always
     environment:
       PGUSER: postgres
